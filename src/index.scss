@@ -9,6 +9,7 @@
 }
 
 .todo {
+  display: flex;
   position: absolute;
   left: 50%;
   top: 50%;
@@ -27,9 +28,15 @@
     border-right: 1px solid #f1f1f1;
     padding: 57px 20px;
   }
+
+  &_tasks {
+    flex: 1;
+    padding: 60px;
+
+  }
 }
 
-.button{
+.button {
   background: #4dd599;
   border-radius: 4px;
   color: #FFFFFF;
@@ -37,15 +44,16 @@
   padding: 10px 20px;
   cursor: pointer;
 
-  &:hover{
+  &:hover {
     background: darken(#4dd599, 6%);
   }
-  &:active{
+
+  &:active {
     background: darken(#4dd599, 10%);
   }
 }
 
-.field{
+.field {
   background: #FFFFFF;
   border: 1px solid #efefef;
   box-sizing: border-box;
@@ -53,7 +61,7 @@
   padding: 8px 12px;
   width: 100%;
 
-  &:focus{
+  &:focus {
     border-color: #dbdbdb;
   }
 }

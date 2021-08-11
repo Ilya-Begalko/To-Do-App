@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import List from "./components/List/List"
 import AddList from "./components/AddListButton/AddList"
+import Tasks from "./components/Tasks/Tasks";
 
 import DB from './assets/db.json'
 
@@ -51,7 +52,9 @@ function App() {
                 />
                 <AddList onAdd={onAddList} colors={DB.colors}/>
             </div>
-            <div className="todo_tasks"></div>
+            <div className="todo_tasks">
+                <Tasks/>
+            </div>
         </div>
     );
 }
