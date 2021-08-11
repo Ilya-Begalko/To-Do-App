@@ -2,10 +2,10 @@
   margin-bottom: 30px;
 
   &_add-button {
-      opacity: 0.4;
+    opacity: 0.4;
 
     &:hover {
-        opacity: 1;
+      opacity: 1;
     }
   }
 
@@ -16,6 +16,11 @@
     padding: 10px 12px;
     margin-bottom: 5px;
 
+    .badge {
+      position: relative;
+      left: 5px;
+    }
+
     &.active {
       background: #FFFFFF;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -25,27 +30,6 @@
     i {
       display: inline-flex;
       margin-right: 8px;
-    }
-
-    .badge {
-      width: 10px;
-      height: 10px;
-      border-radius: 30px;
-      position: relative;
-      left: 5px;
-
-
-      &--green {
-        background-color: #42B883;
-      }
-
-      &--blue {
-        background-color: #64C4ED;
-      }
-
-      &--pink {
-        background-color: #FFBBCC;
-      }
     }
   }
 }
