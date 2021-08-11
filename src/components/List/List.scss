@@ -1,4 +1,5 @@
 .list {
+  $self: &;
   margin-bottom: 30px;
 
   &_add-button {
@@ -16,9 +17,29 @@
     padding: 10px 12px;
     margin-bottom: 5px;
 
+    &:hover #{$self}_remove-icon {
+      opacity: 0.2;
+    }
+
+    #{$self}_remove-icon {
+      opacity: 0;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    span {
+      flex: 1;
+    }
+
     .badge {
       position: relative;
       left: 5px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.5);
     }
 
     &.active {

@@ -1,9 +1,25 @@
-import React from "react";
+import React, {useState} from "react";
 import List from "./components/List/List"
 import AddList from "./components/AddListButton/AddList"
+
 import DB from './assets/db.json'
 
 function App() {
+    const [lists, setLists] = useState(DB.lists.map(item => {
+        item.color = DB.colors.filter(
+            color => color.id === item.colorId
+        )[0].name;
+        return item
+    }));
+
+    const onAddList = (obj) => {
+        const newList = [
+            ...lists,
+            obj
+        ];
+        setLists(newList);
+    };
+
     return (
         <div className="todo">
             <div className="todo_sidebar">
@@ -15,7 +31,7 @@ function App() {
                                     height="18"
                                     viewBox="0 0 18 18"
                                     fill="none"
-                                    opacity = "0.6"
+                                    opacity="0.6"
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
                                     <path
@@ -29,24 +45,11 @@ function App() {
                     ]}
                 />
                 <List
-                    items={[
-                        {
-                            color: "green",
-                            name: 'Purchases',
-                            active: true,
-                        },
-                        {
-                            color: "blue",
-                            name: 'Frontend',
-                        },
-                        {
-                            color: "pink",
-                            name: 'Films',
-                        },
-                    ]}
+                    items={lists}
+                    onRemove={() => {alert(1)}}
                     isRemovable
                 />
-                <AddList colors={DB.colors}/>
+                <AddList onAdd={onAddList} colors={DB.colors}/>
             </div>
             <div className="todo_tasks"></div>
         </div>
