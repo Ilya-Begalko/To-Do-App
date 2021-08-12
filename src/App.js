@@ -1,17 +1,21 @@
-import React, {useState} from "react";
-import List from "./components/List/List"
-import AddList from "./components/AddListButton/AddList"
-import Tasks from "./components/Tasks/Tasks";
+import React, {useState, useEffect} from "react";
+import axios from 'axios'
 
-import DB from './assets/db.json'
+import {List, AddList, Tasks} from './components'
 
 function App() {
-    const [lists, setLists] = useState(DB.lists.map(item => {
-        item.color = DB.colors.filter(
-            color => color.id === item.colorId
-        )[0].name;
-        return item
-    }));
+
+    const [lists, setLists] = useState(null);
+    const [colors, setColors] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({data}) => {
+            setLists(data);
+        });
+        axios.get('http://localhost:3001/colors').then(({data}) => {
+            setColors(data);
+        });
+    }, [])
 
     const onAddList = (obj) => {
         const newList = [
@@ -45,15 +49,20 @@ function App() {
                         },
                     ]}
                 />
-                <List
-                    items={lists}
-                    onRemove={() => {alert(1)}}
-                    isRemovable
-                />
-                <AddList onAdd={onAddList} colors={DB.colors}/>
+                {lists ? (
+                    <List
+                        items={lists}
+                        onRemove={id => {
+                            const newLists = lists.filter(item => item.id !== id);
+                            setLists(newLists);
+                        }}
+                        isRemovable
+                    />
+                ) : ('LOADING...')}
+                <AddList onAdd={onAddList} colors={colors}/>
             </div>
-            <div className="todo_tasks">
-                <Tasks/>
+            <div className="todo_tasks">{
+                lists && <Tasks list={lists[1]}/>}
             </div>
         </div>
     );

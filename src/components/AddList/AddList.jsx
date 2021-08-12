@@ -1,6 +1,7 @@
-import React, {useState} from 'react'
-import List from "../List/List";
-import Badge from "../Badge/Badge";
+import React, {useState, useEffect} from 'react'
+import axios from "axios";
+
+import {List, Badge} from '../../components'
 
 import closeSvg from '../../assets/img/close.svg'
 
@@ -8,8 +9,15 @@ import './AddList.scss';
 
 const AddList = ({colors, onAdd}) => {
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const [selectedColor, selectColor] = useState(colors[0].id)
-    const [inputValue, setInputValue] = useState('')
+    const [selectedColor, selectColor] = useState(3);
+    const [isLoading, setIsLoading] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+
+    useEffect(() => {
+        if (Array.isArray(colors)) {
+            selectColor(colors[0].id);
+        }
+    }, [colors]);
 
     const onClose = () => {
         setVisiblePopup(false);
@@ -18,14 +26,24 @@ const AddList = ({colors, onAdd}) => {
     }
 
     const addList = () => {
-        if (!inputValue){
+        if (!inputValue) {
             alert('Enter the name of the list');
             return;
         }
-        const color = colors.filter(c => c.id === selectedColor)[0].name;
-        onAdd({id: Math.random(), name: inputValue, color});
-        onClose();
-    }
+        setIsLoading(true);
+        axios.post('http://localhost:3001/lists', {
+            name: inputValue,
+            colorId: selectedColor
+        }).then(({data}) => {
+            const color = colors.filter(c => c.id === selectedColor)[0].name;
+            const listObj = {...data, color: {name: color}};
+            onAdd(listObj);
+            onClose();
+        }).finally(() => {
+                setIsLoading(false)
+            }
+        );
+    };
 
     return (
         <div className="add-list">
@@ -76,7 +94,7 @@ const AddList = ({colors, onAdd}) => {
                     {
                         colors.map(color => (
                             <Badge
-                                onClick={ () => selectColor(color.id)}
+                                onClick={() => selectColor(color.id)}
                                 key={color.id}
                                 color={color.name}
                                 className={selectedColor === color.id && 'active'}
@@ -85,8 +103,9 @@ const AddList = ({colors, onAdd}) => {
                 </div>
                 <button
                     className="button"
-                    onClick={addList}
-                >ADD</button>
+                    onClick={addList}>
+                    {isLoading ? 'ADDING...' : 'ADD'}
+                </button>
             </div>}
         </div>
     );
