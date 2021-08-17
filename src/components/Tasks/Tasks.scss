@@ -25,14 +25,59 @@
     }
   }
 
-  &_items{
+  &_form {
+    margin-top: 20px;
+
+    &-block {
+      .button{
+        margin-right: 10px;
+        margin-top: 15px;
+      }
+    }
+
+    &-new {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0.4;
+
+      &:hover{
+        opacity: 0.8;
+        transition: opacity 0.15s ease-in-out;
+      }
+
+      img {
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+      }
+
+      span {
+        font-size: 16px;
+        margin-left: 20px;
+      }
+    }
+  }
+
+  &_items {
     margin-top: 30px;
-    &-row{
+
+    h2 {
+      font-family: Montserrat;
+      font-weight: bold;
+      font-size: 30px;
+      position: absolute;
+      left: 55%;
+      top: 50%;
+      color: #C9D1D3;
+    }
+
+    &-row {
       display: flex;
       align-items: center;
       margin-bottom: 15px;
 
-      input{
+      input {
         margin-left: 15px;
         border: 0;
         font-size: 16px;
@@ -46,9 +91,10 @@
       display: none;
     }
 
-    svg{
+    svg {
       transition: opacity 0.15s ease-in-out;
-      path{
+
+      path {
         stroke: #f2f2f2;
       }
     }
@@ -57,9 +103,10 @@
       background: #4dd599;
       border-color: #4dd599;
 
-      svg{
+      svg {
         opacity: 1;
-        path{
+
+        path {
           stroke: #FFFFFF;
         }
       }
@@ -73,7 +120,7 @@
       border-radius: 30px;
       width: 20px;
       height: 20px;
-      transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out ;
+      transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
       cursor: pointer;
 
       svg {

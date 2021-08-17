@@ -1,18 +1,38 @@
 import React from 'react'
 import axios from "axios";
 
+import AddTaskForm from "./AddTaskForm";
+
 import editSvg from '../../assets/img/edit.svg'
 
 import './Tasks.scss'
 
-const Tasks = ({list}) => {
+const Tasks = ({list, onEditTitle, onAddTask}) => {
+
+    const editTitle = () => {
+        const newTitle = window.prompt('List name', list.name);
+        if (newTitle) {
+            onEditTitle(list.id, newTitle);
+            axios.patch('http://localhost:3001/lists/' + list.id, {
+                name: newTitle
+            }).catch(() => {
+                alert('Failed to rename list');
+            });
+        }
+    }
+
     return (
         <div className="tasks">
             <h2 className="tasks_title">
                 {list.name}
-                <img src={editSvg} alt='Edit list name'/>
+                <img
+                    onClick={editTitle}
+                    src={editSvg}
+                    alt='Edit list name'
+                />
             </h2>
             <div className='tasks_items'>
+                {!list.tasks.length && <h2>No tasks</h2>}
                 {list.tasks.map(task => (<div key={task.id} className='tasks_items-row'>
                         <div className='checkbox'>
                             <input id={`task-${task.id}`} type='checkbox'/>
@@ -32,9 +52,13 @@ const Tasks = ({list}) => {
                                 </svg>
                             </label>
                         </div>
-                        <input readOnly value={task.text} />
+                        <input readOnly value={task.text}/>
                     </div>
                 ))}
+                <AddTaskForm
+                    list={list}
+                    onAddTask={onAddTask}
+                />
             </div>
         </div>
     );
