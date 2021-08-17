@@ -2,18 +2,23 @@
   "lists": [
     {
       "id": 1,
-      "name": "Продажи",
+      "name": "Sales",
       "colorId": 5
     },
     {
       "id": 2,
-      "name": "Фронтенд",
+      "name": "Frontend",
       "colorId": 4
     },
     {
       "id": 3,
-      "name": "Фильмы и сериалы",
+      "name": "Films",
       "colorId": 3
+    },
+    {
+      "name": "Sport",
+      "colorId": 5,
+      "id": 4
     }
   ],
   "tasks": [
@@ -33,7 +38,7 @@
       "id": 3,
       "listId": 2,
       "text": "ReactJS Hooks (useState, useReducer, useEffect и т.д.)",
-      "completed": true
+      "completed": false
     },
     {
       "id": 4,

@@ -7,6 +7,7 @@ function App() {
 
     const [lists, setLists] = useState(null);
     const [colors, setColors] = useState(null);
+    const [activeItem, setActiveItem] = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({data}) => {
@@ -56,13 +57,17 @@ function App() {
                             const newLists = lists.filter(item => item.id !== id);
                             setLists(newLists);
                         }}
+                        onClickItem={item => {
+                            setActiveItem(item);
+                        }}
+                        activeItem = {activeItem}
                         isRemovable
                     />
                 ) : ('LOADING...')}
                 <AddList onAdd={onAddList} colors={colors}/>
             </div>
             <div className="todo_tasks">{
-                lists && <Tasks list={lists[1]}/>}
+                lists && activeItem && <Tasks list={activeItem}/>}
             </div>
         </div>
     );
